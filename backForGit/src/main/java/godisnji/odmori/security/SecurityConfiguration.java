@@ -67,7 +67,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
 				.authorizeRequests()
-
+				/*
+				.antMatchers("/api/praznici").hasAuthority("admin")
+				.antMatchers("/api/radnici/**").hasAnyRole("admin","user")
+				.antMatchers("/api/odeljenja").hasAuthority("user")
+				*/
 				.antMatchers("/api/users/login").permitAll().antMatchers("**").permitAll()
 
 				.anyRequest().authenticated();
@@ -84,11 +88,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public static class WebConfig implements WebMvcConfigurer {
 		@Override
 		public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/api/stanja").allowedOrigins("http://localhost:3000")
+			registry.addMapping("/api/radnici").allowedOrigins("http://localhost:3000")
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH").allowCredentials(true)
 					.maxAge(3600);
 
-			registry.addMapping("/api/sprintovi").allowedOrigins("http://localhost:3000")
+			registry.addMapping("/api/odsustva").allowedOrigins("http://localhost:3000")
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH").allowCredentials(true)
 					.maxAge(3600);
 
@@ -96,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH").allowCredentials(true)
 					.maxAge(3600);
 
-			registry.addMapping("/api/zadaci").allowedOrigins("http://localhost:3000")
+			registry.addMapping("/api/praznici").allowedOrigins("http://localhost:3000")
 					.allowedMethods("OPTIONS", "HEAD", "GET", "PUT", "POST", "DELETE", "PATCH")
 					.exposedHeaders("Total-Pages").allowCredentials(true).maxAge(3600);
 

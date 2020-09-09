@@ -16,11 +16,13 @@ import org.springframework.stereotype.Component;
 
 import godisnji.odmori.model.Odeljenje;
 import godisnji.odmori.model.Odsustvo;
+import godisnji.odmori.model.Praznik;
 import godisnji.odmori.model.Radnik;
 import godisnji.odmori.model.User;
 import godisnji.odmori.model.UserRole;
 import godisnji.odmori.repository.OdeljenjeRepository;
 import godisnji.odmori.repository.OdsustvoRepository;
+import godisnji.odmori.repository.PraznikRepository;
 import godisnji.odmori.repository.RadnikRepository;
 
 import godisnji.odmori.service.UserService;
@@ -42,12 +44,27 @@ public class TestData {
 		
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
+@Autowired
+private PraznikRepository praznikRepository;
 	
 	@SuppressWarnings("deprecation")
 	@PostConstruct
 	public void init() {
-			
+			Praznik praznik1=new Praznik();
+			Praznik praznik2=new Praznik();
+			praznik1.setIme("Dan Drazavnosti");
+			praznik2.setIme("Dan Zena");
+			Date date=new Date();
+			date.setYear(2020-1900);
+			date.setMonth(8);
+			date.setDate(8);
+			praznik1.setDatum(date);
+			praznikRepository.save(praznik1);
+			date.setYear(2020-1900);
+			date.setMonth(2);
+			date.setDate(8);
+			praznik2.setDatum(date);
+			praznikRepository.save(praznik2);
 		Odsustvo odsustvo1 = new Odsustvo();
 		Date date1=new Date();
 		date1.setYear(2020);
@@ -110,7 +127,7 @@ public class TestData {
 	radnikRepository.save(zadatak1);
 		
 		List<User> users = new ArrayList<User>();
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 2; i++) {
 			User user = new User();
 			user.setUsername("user" + i);
 			user.setFirstName("First " + i);
@@ -124,8 +141,8 @@ public class TestData {
 			user.setPassword(encodedPass);
 
 			List<UserRole> roles = Arrays.asList(UserRole.values());
-			Random random = new Random();
-			user.setRole(roles.get(random.nextInt(3)));
+		
+			user.setRole(roles.get(i-1));
 			
 			users.add(user);
 			userService.save(user);

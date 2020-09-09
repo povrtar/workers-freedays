@@ -169,7 +169,9 @@ public class ApiUserController {
 		try {
 			// Reload user details so we can generate token
 			UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
-			return ResponseEntity.ok(tokenUtils.generateToken(userDetails));
+			String token=tokenUtils.generateToken(userDetails);
+			System.out.println("TOKEN:"+token);
+			return ResponseEntity.ok(token);
 		} catch (UsernameNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}

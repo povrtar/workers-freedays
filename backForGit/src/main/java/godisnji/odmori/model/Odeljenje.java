@@ -21,7 +21,7 @@ public class Odeljenje {
 	private String ime;
 	private Long bonusSlobodihDana;
 	@OneToMany(mappedBy = "odeljenje", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Radnik> zadaci = new ArrayList<Radnik>();
+	private List<Radnik> radnici = new ArrayList<Radnik>();
 	
 	public Long getId() {
 		return id;
@@ -39,12 +39,12 @@ public class Odeljenje {
 		this.ime = ime;
 	}
 
-	public List<Radnik> getZadaci() {
-		return zadaci;
+	public List<Radnik> getRadnici() {
+		return radnici;
 	}
 
-	public void setZadaci(List<Radnik> zadaci) {
-		this.zadaci = zadaci;
+	public void setRadnici(List<Radnik> radnici) {
+		this.radnici = radnici;
 	}
 
 	public Long getBonusSlobodihDana() {
